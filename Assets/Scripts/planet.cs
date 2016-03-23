@@ -3,7 +3,7 @@ using System.Collections;
 
 public class planet : MonoBehaviour {
 
-	public int range = 400;
+	public int range = 500;
 	public GameObject player;
 	public float distance;
 	
@@ -24,9 +24,18 @@ public class planet : MonoBehaviour {
 
 		if (distance <= range) {
 			Debug.Log ("You are Near " + this.gameObject.name);
-			player.GetComponent<ship> ().nearPlanet = true;
+            // Alex
+			// player.GetComponent<ship> ().nearPlanet = true;
+            
+            // Anton
+            player.GetComponent<ShipMovement>().nearPlanet = true;
+            player.GetComponent<ShipMovement>().nearPlanetName = this.gameObject.name;
 		} else {
-			player.GetComponent<ship> ().nearPlanet = false;
+            // Alex
+			//player.GetComponent<ship> ().nearPlanet = false;
+            
+            // Anton
+            player.GetComponent<ShipMovement>().nearPlanet = false;
 		}
 	}
 }
