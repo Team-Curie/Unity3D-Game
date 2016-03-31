@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour {
 		// Move Player
 		this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
 		this.transform.position += Input.GetAxis("Horizontal") * transform.right * moveSpeed * Time.deltaTime;
+		if (Input.GetAxis("Vertical") != 0) {
+			this.GetComponent<Animation> ().Play ("PlayerMove");
+		}
+
 	}
 
 	void playerRotate() {
