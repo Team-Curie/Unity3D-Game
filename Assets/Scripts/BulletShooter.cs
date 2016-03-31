@@ -8,7 +8,7 @@ public class BulletShooter : MonoBehaviour
 
     void Update()
     {
-        transform.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0f, 0f, bulletSpeed), ForceMode.Impulse);
+        this.transform.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0f, 0f, bulletSpeed), ForceMode.Impulse);
         //transform.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * bulletSpeed, ForceMode.Impulse);
         //transform.position += transform.forward * Time.deltaTime * bulletSpeed;
 
