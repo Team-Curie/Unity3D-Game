@@ -4,6 +4,7 @@ public class BulletShooter : MonoBehaviour
 {
     float bulletTimeout = 20;
     float bulletSpeed = 0.05f;
+    float bulletDamage = 50;
 
     void Update()
     {

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerMovement2 : MonoBehaviour
 {
     //Camera playerCamera;
+    public float playerHealth = 1024f;
     public float walkGravity = 9.8f;
     public float jumpGravity = 40f;
     public float moveSpeed = 25f;
     public float mouseSensitivity = 100f;
     public float jumpForce = 10f;
+    public Slider healthSlider;
 
     private Rigidbody playerRigidbody;
     private bool isOnTheGround = false;
@@ -19,6 +22,7 @@ public class PlayerMovement2 : MonoBehaviour
         //playerCamera = Camera.main;
         SetGravity(walkGravity);
         playerRigidbody = GetComponent<Rigidbody>();
+        healthSlider.value = playerHealth;
     }
 
     // Update is called once per frame
@@ -33,6 +37,7 @@ public class PlayerMovement2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
+            Debug.Log(healthSlider.value);
         }
     }
 

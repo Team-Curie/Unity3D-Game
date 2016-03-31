@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ShipMovement : MonoBehaviour
 {
     public float fuel = 1024f;
+    public float shipHealth = 100f;
     public float speed = 10f;
     public float mouseSensitivity = 100f;
+    public Slider fuelSlider;
+    public Slider healthSlider;
 
     public bool nearPlanet = false;
     public string nearPlanetName;
 
     void Start()
     {
-
+        fuelSlider.value = fuel;
+        healthSlider.value = shipHealth;
     }
 
     // Update is called once per frame
@@ -44,8 +49,9 @@ public class ShipMovement : MonoBehaviour
 
     private void DecreaseFuel()
     {
-        fuel -= (speed / 1000);
-        Debug.Log(fuel);
+        fuel -= (speed / 100);
+        fuelSlider.value = fuel;
+        //Debug.Log(fuel);
     }
 
     private void LandOnPlanet()
