@@ -15,6 +15,13 @@ public class PlayerMovement2 : MonoBehaviour
 
     private Rigidbody playerRigidbody;
     private bool isOnTheGround = false;
+    private GameObject gun;
+    private Animation reloadAnimation;
+
+    void Awake()
+    {
+        gun = GameObject.FindGameObjectWithTag("gun");
+    }
 
     // Use this for initialization
     void Start()
@@ -29,7 +36,7 @@ public class PlayerMovement2 : MonoBehaviour
     void Update()
     {
         //moving player
-        playerRigidbody.velocity = transform.TransformDirection(new Vector3(Input.GetAxis("Horizontal") * moveSpeed, playerRigidbody.velocity.y, Input.GetAxis("Vertical") * moveSpeed));
+        playerRigidbody.velocity = transform.TransformDirection(new Vector3(-Input.GetAxis("Vertical") * moveSpeed, playerRigidbody.velocity.y, Input.GetAxis("Horizontal") * moveSpeed));
 
         //rotate
         transform.Rotate(new Vector3(0f, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
@@ -38,6 +45,12 @@ public class PlayerMovement2 : MonoBehaviour
         {
             Jump();
             Debug.Log(healthSlider.value);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            reloadAnimation = gun.GetComponent<Animation>();
+            reloadAnimation.Play();
         }
     }
 
