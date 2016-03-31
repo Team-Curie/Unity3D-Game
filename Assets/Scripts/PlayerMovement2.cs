@@ -28,7 +28,7 @@ public class PlayerMovement2 : MonoBehaviour
     {
         //playerCamera = Camera.main;
         SetGravity(walkGravity);
-        playerRigidbody = GetComponent<Rigidbody>();
+        playerRigidbody = this.GetComponent<Rigidbody>();
         healthSlider.value = playerHealth;
     }
 
@@ -39,7 +39,7 @@ public class PlayerMovement2 : MonoBehaviour
         playerRigidbody.velocity = transform.TransformDirection(new Vector3(-Input.GetAxis("Vertical") * moveSpeed, playerRigidbody.velocity.y, Input.GetAxis("Horizontal") * moveSpeed));
 
         //rotate
-        transform.Rotate(new Vector3(0f, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
+        this.transform.Rotate(new Vector3(0f, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
