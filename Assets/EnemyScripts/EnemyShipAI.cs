@@ -52,6 +52,7 @@ public class EnemyShipAI : MonoBehaviour {
             }
             if (Vector3.Distance(transform.position, targetPosition.position) < range)
             {
+                Debug.Log("inRange");
                 doPatrol = false;
             }
             
