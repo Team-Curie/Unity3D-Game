@@ -7,10 +7,10 @@ public class PlayerMovement2 : MonoBehaviour
     public Transform playerCamera;
     public float playerHealth = 100f;
     public float walkGravity = 9.8f;
-    public float jumpGravity = 40f;
-    public float moveSpeed = 25f;
-    public float mouseSensitivity = 100f;
-    public float jumpForce = 1f;
+    public float jumpGravity = 250f;
+    public float moveSpeed = 10f;
+    public float mouseSensitivity = 25f;
+    public float jumpForce = 1000f;
     public float rotationZ = 0.0f;
     public Slider healthSlider;
     public Image damageImage;
@@ -40,17 +40,26 @@ public class PlayerMovement2 : MonoBehaviour
         healthSlider.value = playerHealth;
     }
 
+    void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+            //Debug.Log(healthSlider.value);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         playerMove();
         playerRotate();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-            //Debug.Log(healthSlider.value);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Jump();
+        //    //Debug.Log(healthSlider.value);
+        //}
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -89,12 +98,12 @@ public class PlayerMovement2 : MonoBehaviour
         this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
         this.transform.position += Input.GetAxis("Horizontal") * transform.right * moveSpeed * Time.deltaTime;
 
-        if (Input.GetAxis("Vertical") != 0)
-        {
+        //if (Input.GetAxis("Vertical") != 0)
+        //{
             //Debug.Log(transform.GetComponent<Animation>().name);
             //this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
             //transform.GetComponent<Animation>().Play("PlayerMove");
-        }
+        //}
     }
 
     void playerRotate()
@@ -109,13 +118,14 @@ public class PlayerMovement2 : MonoBehaviour
     private void Jump()
     {
         Debug.Log("Jumping...");
-        Debug.Log("Are we on the ground? " + isOnTheGround);
-        if (isOnTheGround)
+        //Debug.Log("Are we on the ground? " + isOnTheGround);
+        if (!isOnTheGround)
         {
             return;
         }
 
-        playerRigidbody.AddForce(Vector3.up * jumpForce);
+        playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Acceleration);
+        //playerRigidbody.velocity += (Vector3.up * jumpForce);
         isOnTheGround = false;
         SetGravity(jumpGravity);
     }
@@ -125,18 +135,9 @@ public class PlayerMovement2 : MonoBehaviour
         Physics.gravity = -Vector3.up * gravityToBeSet;
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.name == "Terrain" && !isOnTheGround)
-        {
-            isOnTheGround = true;
-            SetGravity(walkGravity);
-        }
-    }
-
     private void OnTriggerStay(Collider collider)
     {
-        if (collider.name == "Terrain" && !isOnTheGround)
+        if (collider.gameObject.name == "Terrain" && !isOnTheGround)
         {
             isOnTheGround = true;
 
@@ -145,14 +146,26 @@ public class PlayerMovement2 : MonoBehaviour
                 SetGravity(walkGravity);
             }
         }
+        Debug.Log("Gravity on the ground is " + Physics.gravity);
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.name == "Terrain" && !isOnTheGround)
+        {
+            isOnTheGround = true;
+            SetGravity(walkGravity);
+        }
+        Debug.Log("Gravity on the ground is " + Physics.gravity);
     }
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.name == "Terrain" && isOnTheGround)
+        if (collider.gameObject.name == "Terrain" && isOnTheGround)
         {
             isOnTheGround = false;
             SetGravity(jumpGravity);
         }
+        Debug.Log("Gravity in air is " + Physics.gravity);
     }
 }
