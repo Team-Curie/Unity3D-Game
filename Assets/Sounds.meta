@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Sounds.meta
 guid: d872229adeb9bd8479e64c6d3370de48
 folderAsset: yes
 timeCreated: 1459626133
+=======
+guid: b6ad42895471c484fabeae40f2984f5e
+timeCreated: 1459624928
+>>>>>>> origin/master:Assets/Textures/Thumbs.db.meta
 licenseType: Free
 DefaultImporter:
   userData: 
