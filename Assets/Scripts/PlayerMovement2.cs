@@ -14,8 +14,8 @@ public class PlayerMovement2 : MonoBehaviour
     public float rotationZ = 0.0f;
     public Slider healthSlider;
     public Image damageImage;
-    public float flashSpeed = 2.5f;
-    public Color flashColor = new Color(1f, 0f, 0f, 0.5f);
+    public float flashSpeed = 1f;
+    public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
     public bool shouldFlashDamage = false;
     public bool isPlayerHit = false;
 
@@ -75,7 +75,7 @@ public class PlayerMovement2 : MonoBehaviour
         }
         else
         {
-            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed);
         }
 
         shouldFlashDamage = false;
@@ -100,9 +100,9 @@ public class PlayerMovement2 : MonoBehaviour
 
         //if (Input.GetAxis("Vertical") != 0)
         //{
-            //Debug.Log(transform.GetComponent<Animation>().name);
-            //this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
-            //transform.GetComponent<Animation>().Play("PlayerMove");
+        //Debug.Log(transform.GetComponent<Animation>().name);
+        //this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
+        //transform.GetComponent<Animation>().Play("PlayerMove");
         //}
     }
 
