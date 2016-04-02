@@ -4,13 +4,17 @@ using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour
 {
+
+    Camera camera;
+    EnemyScriptGround enemy;
+    EnemyShipAI enemyShip;
     public GameObject bulletShootPosition;
     public GameObject bulletObject;
-
+    public AudioSource[] shot;
+    public Transform[] effect;
     public Text bulletDisplay;
     public int bulletSpeed = 100;
-
-    float bulletDamage = 50;
+    public int bulletDamage = 50;
     public int currentBulletAmount;
     private int defaultBulletCount = 30;
     public int clipAmmount;
@@ -19,7 +23,7 @@ public class PlayerShooting : MonoBehaviour
     void Start()
     {
         reload = true;
-
+        
     }
 
     // Update is called once per frame
@@ -30,21 +34,51 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
+        
+        bulletDisplay.text = currentBulletAmount.ToString() + "/" + clipAmmount.ToString();
         if (clipAmmount < 0)
         {
             clipAmmount = 0;
         }
-        bulletDisplay.text = currentBulletAmount.ToString() + "/" + clipAmmount.ToString(); ;
+        RaycastHit hit;  
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width*0.5f, Screen.height*0.5f, 0));
+
+       
+        
         if (Input.GetMouseButtonDown(0))
         {
-            if (currentBulletAmount > 0 && reload && clipAmmount >= 0)
-            {
+            
+                if (currentBulletAmount > 0 && reload && clipAmmount >= 0)
+             {
+                shot[0].Play();
+                if (Physics.Raycast (ray , out hit, 500))
+                {
+                    
+                    currentBulletAmount -= 1;
+                    if(hit.collider == null)
+                    {
+                        currentBulletAmount -= 1;
+                    }
+                  /*  if (hit.collider.gameObject.tag != "Enemy")
+                    {
+                        var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+                  */
+                    else if(hit.collider.gameObject.tag == "Enemy")
+                    {
+                        EnemyScriptGround enemy = hit.collider.GetComponent<EnemyScriptGround>();
+                        enemy.takeDamage(bulletDamage);
+                        var particleClone = Instantiate(effect[1], hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+                    else if (hit.collider.gameObject.tag == "EnemyShip")
+                    {
+                        Debug.Log("DAMAGE TAKEN");
+                        EnemyShipAI enemyShip = hit.collider.GetComponent<EnemyShipAI>();
+                        enemyShip.takeDamage(bulletDamage);        
+                        var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
 
-                var bullet = GameObject.Instantiate(bulletObject, bulletShootPosition.transform.position, bulletShootPosition.transform.rotation) as GameObject;
-                bullet.GetComponent<Rigidbody>().AddForce(transform.forward * (bulletSpeed * 10) * Time.deltaTime);
-                currentBulletAmount -= 1;
-                Destroy(bullet, 2);
-
+                    }
+                }
             }
 
 
@@ -55,6 +89,7 @@ public class PlayerShooting : MonoBehaviour
 
             if (currentBulletAmount <= 0 || currentBulletAmount != defaultBulletCount && clipAmmount > 0)
             {
+                shot[1].Play();
                 clipAmmount -= 1;
                 currentBulletAmount = defaultBulletCount;
                 reload = false;
@@ -73,7 +108,8 @@ public class PlayerShooting : MonoBehaviour
             reloadTimer = 3f;
         }
     }
-
+    
+   
 
 
 

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EnemyShipAI : MonoBehaviour {
-
+    public float enemyHealth;
     public Transform[] wayPoints;
     public Transform targetPosition;
     public Vector3 moveDirection;
@@ -104,9 +104,12 @@ public class EnemyShipAI : MonoBehaviour {
 
 
     }
-    
-   
-        
 
- 
+    public void takeDamage(int dmg)
+    {
+        enemyHealth -= dmg;
+    }
+
+
+
 }
