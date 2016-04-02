@@ -4,13 +4,14 @@ using UnityEngine.UI;
 
 public class PlayerMovement2 : MonoBehaviour
 {
-    //Camera playerCamera;
+    public Transform playerCamera;
     public float playerHealth = 1024f;
     public float walkGravity = 9.8f;
     public float jumpGravity = 40f;
     public float moveSpeed = 25f;
     public float mouseSensitivity = 100f;
-    public float jumpForce = 10f;
+    public float jumpForce = 1f;
+    public float rotationZ = 0.0f;
     public Slider healthSlider;
 
     private Rigidbody playerRigidbody;
@@ -36,10 +37,11 @@ public class PlayerMovement2 : MonoBehaviour
     void Update()
     {
         //moving player
-        playerRigidbody.velocity = transform.TransformDirection(new Vector3(-Input.GetAxis("Vertical") * moveSpeed, playerRigidbody.velocity.y, Input.GetAxis("Horizontal") * moveSpeed));
-
+        //playerRigidbody.velocity = transform.TransformDirection(new Vector3(-Input.GetAxis("Vertical") * moveSpeed, playerRigidbody.velocity.y, Input.GetAxis("Horizontal") * moveSpeed));
         //rotate
-        this.transform.Rotate(new Vector3(0f, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
+        //this.transform.Rotate(new Vector3(0f, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
+        playerMove();
+        playerRotate();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -50,8 +52,32 @@ public class PlayerMovement2 : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             reloadAnimation = gun.GetComponent<Animation>();
+            //reloadAnimation = gun.GetComponent("ReloadGun") as Animation;
             reloadAnimation.Play();
         }
+    }
+
+    void playerMove()
+    {
+        // Move Player
+        this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
+        this.transform.position += Input.GetAxis("Horizontal") * transform.right * moveSpeed * Time.deltaTime;
+
+        if (Input.GetAxis("Vertical") != 0)
+        {
+            //Debug.Log(transform.GetComponent<Animation>().name);
+            //this.transform.position += Input.GetAxis("Vertical") * transform.forward * moveSpeed * Time.deltaTime;
+            //transform.GetComponent<Animation>().Play("PlayerMove");
+        }
+    }
+
+    void playerRotate()
+    {
+        //Player Rotate
+        this.transform.eulerAngles += new Vector3(0, Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime, 0);
+        rotationZ += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        rotationZ = Mathf.Clamp(rotationZ, -50, 50);
+        playerCamera.localEulerAngles = new Vector3(-rotationZ, 0, 0);
     }
 
     private void Jump()
@@ -62,8 +88,8 @@ public class PlayerMovement2 : MonoBehaviour
             return;
         }
 
+        playerRigidbody.AddForce(Vector3.up * jumpForce);
         isOnTheGround = false;
-        playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         SetGravity(jumpGravity);
     }
 
