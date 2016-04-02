@@ -14,7 +14,7 @@ public class PlayerMovement2 : MonoBehaviour
     public float rotationZ = 0.0f;
     public Slider healthSlider;
     public Image damageImage;
-    public float flashSpeed = 0.1f;
+    public float flashSpeed = 2.5f;
     public Color flashColor = new Color(1f, 0f, 0f, 0.5f);
     public bool shouldFlashDamage = false;
     public bool isPlayerHit = false;
