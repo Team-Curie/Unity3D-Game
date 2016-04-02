@@ -6,7 +6,8 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bulletShootPosition;
     public GameObject bulletObject;
 	public int bulletSpeed = 100;
-	float bulletDamage = 50;
+	
+    float bulletDamage = 20;
 
     // Update is called once per frame
     void Update()

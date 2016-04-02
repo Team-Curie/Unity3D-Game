@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PlayerMovement2 : MonoBehaviour
 {
     public Transform playerCamera;
-    public float playerHealth = 1024f;
+    public float playerHealth = 100f;
     public float walkGravity = 9.8f;
     public float jumpGravity = 40f;
     public float moveSpeed = 25f;
@@ -13,15 +13,22 @@ public class PlayerMovement2 : MonoBehaviour
     public float jumpForce = 1f;
     public float rotationZ = 0.0f;
     public Slider healthSlider;
+    public Image damageImage;
+    public float flashSpeed = 0.1f;
+    public Color flashColor = new Color(1f, 0f, 0f, 0.5f);
+    public bool shouldFlashDamage = false;
+    public bool isPlayerHit = false;
 
     private Rigidbody playerRigidbody;
-    private bool isOnTheGround = false;
+    public bool isOnTheGround;
     private GameObject gun;
     private Animation reloadAnimation;
+    private float hitTimeout = 3f;
 
     void Awake()
     {
         gun = GameObject.FindGameObjectWithTag("gun");
+        reloadAnimation = gun.GetComponent<Animation>();
     }
 
     // Use this for initialization
@@ -29,31 +36,50 @@ public class PlayerMovement2 : MonoBehaviour
     {
         //playerCamera = Camera.main;
         SetGravity(walkGravity);
-        playerRigidbody = this.GetComponent<Rigidbody>();
+        playerRigidbody = GetComponent<Rigidbody>();
         healthSlider.value = playerHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //moving player
-        //playerRigidbody.velocity = transform.TransformDirection(new Vector3(-Input.GetAxis("Vertical") * moveSpeed, playerRigidbody.velocity.y, Input.GetAxis("Horizontal") * moveSpeed));
-        //rotate
-        //this.transform.Rotate(new Vector3(0f, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
         playerMove();
         playerRotate();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
-            Debug.Log(healthSlider.value);
+            //Debug.Log(healthSlider.value);
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            reloadAnimation = gun.GetComponent<Animation>();
-            //reloadAnimation = gun.GetComponent("ReloadGun") as Animation;
             reloadAnimation.Play();
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (shouldFlashDamage)
+        {
+            damageImage.color = flashColor;
+        }
+        else
+        {
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+        }
+
+        shouldFlashDamage = false;
+        IsPlayerHitCheck();
+    }
+
+    private void IsPlayerHitCheck()
+    {
+        hitTimeout -= Time.deltaTime;
+        if (hitTimeout <= 0)
+        {
+            this.isPlayerHit = false;
+            hitTimeout = 3f;
         }
     }
 
@@ -83,6 +109,7 @@ public class PlayerMovement2 : MonoBehaviour
     private void Jump()
     {
         Debug.Log("Jumping...");
+        Debug.Log("Are we on the ground? " + isOnTheGround);
         if (isOnTheGround)
         {
             return;
@@ -100,7 +127,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Floor" && !isOnTheGround)
+        if (collider.name == "Terrain" && !isOnTheGround)
         {
             isOnTheGround = true;
             SetGravity(walkGravity);
@@ -109,7 +136,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void OnTriggerStay(Collider collider)
     {
-        if (collider.tag == "Floor" && !isOnTheGround)
+        if (collider.name == "Terrain" && !isOnTheGround)
         {
             isOnTheGround = true;
 
@@ -122,7 +149,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == "Floor" && isOnTheGround)
+        if (collider.name == "Terrain" && isOnTheGround)
         {
             isOnTheGround = false;
             SetGravity(jumpGravity);
