@@ -18,7 +18,7 @@ public class PlayerMovement2 : MonoBehaviour
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
     public bool shouldFlashDamage = false;
     public bool isPlayerHit = false;
-
+    public PlayerShooting clip;
     private Rigidbody playerRigidbody;
     public bool isOnTheGround;
     private GameObject gun;
@@ -38,6 +38,7 @@ public class PlayerMovement2 : MonoBehaviour
         SetGravity(walkGravity);
         playerRigidbody = GetComponent<Rigidbody>();
         healthSlider.value = playerHealth;
+        clip = GetComponent<PlayerShooting>();
     }
 
     void FixedUpdate()
@@ -63,7 +64,10 @@ public class PlayerMovement2 : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            reloadAnimation.Play();
+            if (clip.clipAmmount >= 0 && clip.currentBulletAmount == 30)
+            {
+                reloadAnimation.Play();
+            }
         }
     }
 

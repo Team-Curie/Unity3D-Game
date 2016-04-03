@@ -9,9 +9,11 @@ public class PlayerShooting : MonoBehaviour
     EnemyScriptGround enemy;
     EnemyShipAI enemyShip;
     public GameObject bulletShootPosition;
-    public GameObject bulletObject;
+  //  public GameObject bulletObject;
     public AudioSource[] shot;
     public Transform[] effect;
+    public ParticleSystem muzzle;
+    public Light light;
     public Text bulletDisplay;
     public int bulletSpeed = 100;
     public int bulletDamage = 50;
@@ -20,6 +22,7 @@ public class PlayerShooting : MonoBehaviour
     public int clipAmmount;
     public bool reload;
     public float reloadTimer = 3f;
+    
     void Start()
     {
         reload = true;
@@ -50,6 +53,8 @@ public class PlayerShooting : MonoBehaviour
             
                 if (currentBulletAmount > 0 && reload && clipAmmount >= 0)
              {
+                muzzle.Play();
+                
                 shot[0].Play();
                 if (Physics.Raycast (ray , out hit, 500))
                 {
@@ -59,11 +64,11 @@ public class PlayerShooting : MonoBehaviour
                     {
                         currentBulletAmount -= 1;
                     }
-                  /*  if (hit.collider.gameObject.tag != "Enemy")
+                    if (hit.collider.gameObject.tag == null)
                     {
                         var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
                     }
-                  */
+                  
                     else if(hit.collider.gameObject.tag == "Enemy")
                     {
                         EnemyScriptGround enemy = hit.collider.GetComponent<EnemyScriptGround>();
@@ -87,7 +92,7 @@ public class PlayerShooting : MonoBehaviour
         {
 
 
-            if (currentBulletAmount <= 0 || currentBulletAmount != defaultBulletCount && clipAmmount > 0)
+            if ((currentBulletAmount <= 0 || currentBulletAmount != defaultBulletCount) && clipAmmount > 0)
             {
                 shot[1].Play();
                 clipAmmount -= 1;

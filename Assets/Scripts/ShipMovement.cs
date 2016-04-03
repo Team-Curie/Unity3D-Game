@@ -7,10 +7,12 @@ public class ShipMovement : MonoBehaviour
 {
     public float fuel = 1024f;
     public float shipHealth = 100f;
+    public float shipShield = 100f;
     public float speed = 10f;
     public float mouseSensitivity = 100f;
     public Slider fuelSlider;
     public Slider healthSlider;
+    public Slider armorShield;
 
     public bool nearPlanet = false;
     public string nearPlanetName;
@@ -19,8 +21,14 @@ public class ShipMovement : MonoBehaviour
     {
         fuelSlider.value = fuel;
         healthSlider.value = shipHealth;
+        armorShield.value = shipShield;
     }
-
+    void LateUpdate()
+    {
+        
+        healthSlider.value = shipHealth;
+        armorShield.value = shipShield;
+    }
     // Update is called once per frame
     void Update()
     {
