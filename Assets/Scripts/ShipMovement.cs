@@ -20,6 +20,7 @@ public class ShipMovement : MonoBehaviour
 
     void Start()
     {
+        
         fuelSlider.value = fuel;
         healthSlider.value = shipHealth;
         armorShield.value = shipShield;
