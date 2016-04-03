@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class ShipMovement : MonoBehaviour
 {
+    public Transform playerCamera;
     public float fuel = 1024f;
     public float shipHealth = 100f;
     public float shipShield = 100f;
-    public float speed = 10f;
+    public float speed = 100f;
     public float mouseSensitivity = 100f;
+    public float rotationZ = 0.0f;
     public Slider fuelSlider;
     public Slider healthSlider;
     public Slider armorShield;
-
     public bool nearPlanet = false;
     public string nearPlanetName;
 
@@ -39,6 +40,8 @@ public class ShipMovement : MonoBehaviour
             DecreaseFuel();
         }
 
+        RotateShip();
+
         if (nearPlanet)
         {
             Debug.Log("You are near planet " + nearPlanetName + ": Press E key to land.");
@@ -48,11 +51,8 @@ public class ShipMovement : MonoBehaviour
 
     void MoveShip()
     {
-        //this.transform.Translate(-Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), (this.transform.position.z + speed) * Time.deltaTime);
-        transform.position += transform.forward * Time.deltaTime * speed * Input.GetAxis("Vertical");
-        //transform.Rotate(0f, Input.GetAxis("Mouse X") * turnRate, 0f);
-        //transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0f));
-        transform.localEulerAngles += new Vector3(-Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0);
+        this.transform.position += Input.GetAxis("Vertical") * transform.forward * speed * Time.deltaTime;
+        this.transform.position += Input.GetAxis("Horizontal") * transform.right * speed * Time.deltaTime;
     }
 
     private void DecreaseFuel()
@@ -60,6 +60,14 @@ public class ShipMovement : MonoBehaviour
         fuel -= (speed / 100);
         fuelSlider.value = fuel;
         //Debug.Log(fuel);
+    }
+
+    private void RotateShip()
+    {
+        this.transform.eulerAngles += new Vector3(0f, Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime, 0f);
+        rotationZ += Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        rotationZ = Mathf.Clamp(rotationZ, -50, 50);
+        playerCamera.localEulerAngles = new Vector3(-rotationZ, 0, 0);
     }
 
     private void LandOnPlanet()
