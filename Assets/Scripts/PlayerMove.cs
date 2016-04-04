@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
 
     public float maxSpeed = 70f;
     public float minSpeed = 10f;
-    public float rotationSpeed = 0.05f;
+    public float rotationSpeed = 150f;
     public bool status = false;
 
     public float currrentSpeed = 30f;
