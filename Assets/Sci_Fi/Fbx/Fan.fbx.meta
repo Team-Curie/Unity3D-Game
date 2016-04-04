@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: 6b50817bb99b7864fbe3b0bb942d5ca2
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Low_Fan:RetopoGroup1
+    100004: Low_Fan:RetopoGroup2
+    100006: Low_Fan:transform1
+    100008: Low_Fan:transform2
+    100010: Low_palette:RetopoGroup1
+    100012: Low_palette:RetopoGroup2
+    100014: Low_palette:RetopoGroup3
+    100016: Low_palette:transform1
+    100018: Low_palette:transform2
+    100020: Low_palette:transform3
+    100022: Low_palette:transform4
+    100024: Low_palette:transform5
+    100026: Low_palette:transform6
+    100028: polySurface1
+    100030: polySurface2
+    100032: polySurface3
+    100034: polySurface4
+    100036: polySurface5
+    100038: polySurface6
+    100040: polySurface6 1
+    100042: polySurface7
+    100044: polySurface8
+    100046: polySurface9
+    100048: RetopoGroup1
+    100050: RetopoGroup2
+    100052: RetopoGroup3
+    100054: RetopoGroup4
+    100056: transform1
+    100058: transform2
+    100060: transform3
+    100062: transform4
+    100064: transform5
+    100066: transform6
+    100068: transform7
+    100070: transform8
+    100072: transform9
+    400000: //RootNode
+    400002: Low_Fan:RetopoGroup1
+    400004: Low_Fan:RetopoGroup2
+    400006: Low_Fan:transform1
+    400008: Low_Fan:transform2
+    400010: Low_palette:RetopoGroup1
+    400012: Low_palette:RetopoGroup2
+    400014: Low_palette:RetopoGroup3
+    400016: Low_palette:transform1
+    400018: Low_palette:transform2
+    400020: Low_palette:transform3
+    400022: Low_palette:transform4
+    400024: Low_palette:transform5
+    400026: Low_palette:transform6
+    400028: polySurface1
+    400030: polySurface2
+    400032: polySurface3
+    400034: polySurface4
+    400036: polySurface5
+    400038: polySurface6
+    400040: polySurface6 1
+    400042: polySurface7
+    400044: polySurface8
+    400046: polySurface9
+    400048: RetopoGroup1
+    400050: RetopoGroup2
+    400052: RetopoGroup3
+    400054: RetopoGroup4
+    400056: transform1
+    400058: transform2
+    400060: transform3
+    400062: transform4
+    400064: transform5
+    400066: transform6
+    400068: transform7
+    400070: transform8
+    400072: transform9
+    2300000: polySurface1
+    2300002: polySurface6
+    3300000: polySurface1
+    3300002: polySurface6
+    4300000: polySurface1
+    4300002: polySurface6
+    6400000: polySurface1
+    6400002: polySurface6
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

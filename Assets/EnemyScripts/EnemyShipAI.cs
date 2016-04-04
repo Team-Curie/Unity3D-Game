@@ -22,6 +22,7 @@ public class EnemyShipAI : MonoBehaviour {
     public float fireRate;
     public float nextFire;
     Vector3 target;
+
     void Start()
     {
         doPatrol = true;
@@ -32,6 +33,7 @@ public class EnemyShipAI : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
         if (enemyHealth <= 100)
         {
 

@@ -22,11 +22,16 @@ public class PlayerShooting : MonoBehaviour
     public int clipAmmount;
     public bool reload;
     public float reloadTimer = 3f;
-    
+    public Canvas canvas;
+
+
     void Start()
     {
+        canvas = FindObjectOfType<Canvas>();
+        bulletDisplay = canvas.GetComponentInChildren<Text>();
         reload = true;
         
+
     }
 
     // Update is called once per frame
@@ -64,11 +69,11 @@ public class PlayerShooting : MonoBehaviour
                     {
                         currentBulletAmount -= 1;
                     }
-                    if (hit.collider.gameObject.tag == null)
+                   
+                    if(hit.collider.gameObject.tag !="Enemy" && hit.collider.gameObject.tag !=  "EnemyShip")
                     {
-                        var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
+                         var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
                     }
-                  
                     else if(hit.collider.gameObject.tag == "Enemy")
                     {
                         EnemyScriptGround enemy = hit.collider.GetComponent<EnemyScriptGround>();

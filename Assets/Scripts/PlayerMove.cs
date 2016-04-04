@@ -15,6 +15,8 @@ public class PlayerMove : MonoBehaviour
     public float shipHealth = 100f;
     public float shipShield = 100f;
     public float mouseSensitivity = 100f;
+    public Canvas canvas;
+    private Slider[] canvasSliders;
     public Slider fuelSlider;
     public Slider healthSlider;
     public Slider armorShield;
@@ -33,6 +35,13 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        canvas = FindObjectOfType<Canvas>();
+        canvasSliders = canvas.GetComponentsInChildren<Slider>();
+
+        healthSlider = canvasSliders[0];
+        fuelSlider = canvasSliders[1];
+        armorShield = canvasSliders[2];
+
         fuelSlider.value = fuel;
         healthSlider.value = shipHealth;
         armorShield.value = shipShield;
