@@ -28,14 +28,14 @@ public class planet : MonoBehaviour {
 			// player.GetComponent<ship> ().nearPlanet = true;
             
             // Anton
-            player.GetComponent<ShipMovement>().nearPlanet = true;
-            player.GetComponent<ShipMovement>().nearPlanetName = this.gameObject.name;
+            player.GetComponent<PlayerMove>().nearPlanet = true;
+            player.GetComponent<PlayerMove>().nearPlanetName = this.gameObject.name;
 		} else {
             // Alex
 			//player.GetComponent<ship> ().nearPlanet = false;
             
             // Anton
-            player.GetComponent<ShipMovement>().nearPlanet = false;
+            player.GetComponent<PlayerMove>().nearPlanet = false;
 		}
 	}
 }

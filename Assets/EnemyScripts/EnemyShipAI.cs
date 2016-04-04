@@ -11,7 +11,7 @@ public class EnemyShipAI : MonoBehaviour {
     public GameObject bullet;
     public GameObject[] itemLoot;
     public ParticleSystem laser;
-    public ShipMovement playerShip;
+    public PlayerMove playerShip;
     public bool playerDetected;
     public float range;
     public float attackRange;
@@ -26,7 +26,7 @@ public class EnemyShipAI : MonoBehaviour {
     {
         doPatrol = true;
         targetPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerShip = GameObject.FindGameObjectWithTag("Player").GetComponent<ShipMovement>();
+        playerShip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
     }
 
     // Update is called once per frame
