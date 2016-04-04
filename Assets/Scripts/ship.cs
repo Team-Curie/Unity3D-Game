@@ -9,7 +9,7 @@ public class ship : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement2>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement2>();    
     }
 
     // Update is called once per frame

@@ -1,37 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class currencyScript : MonoBehaviour {
 
-    public int currency;
-    
+
+    public Text currencyText;
 	// Use this for initialization
 	void Start () {
 
-        PlayerPrefs.GetInt("currency", currency);
+        currencyText = GetComponent<Text>();
               
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if(currency < 0)
-        {
-            currency = 0;
-        }
-        
-        PlayerPrefs.SetInt("currency", currency);
-        DontDestroyOnLoad(this.gameObject);
-        Debug.Log(currency);
+	void LateUpdate () {
+         
+         
+
     }
 
-    public void addCurrency(int amount)
-    {
-        currency += amount;
-    }
-    public void removeCurrency(int amount)
-    {
-        currency -= amount;
-    }
+   
 
 
 

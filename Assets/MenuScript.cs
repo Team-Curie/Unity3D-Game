@@ -8,6 +8,7 @@ public class MenuScript : MonoBehaviour {
     
 	public void loadMainScene()
     {
+        PlayerPrefs.set
         Application.LoadLevel("Hangar");
     }
 
