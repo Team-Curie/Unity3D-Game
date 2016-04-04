@@ -17,7 +17,7 @@ public class ShipSelect : MonoBehaviour {
 
         if (shipIndex != null)
         {
-            shipIndex = PlayerPrefs.GetInt("shipIndex",0);
+            shipIndex = PlayerPrefs.GetInt("shipIndex");
         }
 	}
 	
@@ -56,9 +56,10 @@ public class ShipSelect : MonoBehaviour {
         {
 
             shipIndex = 0;
-            PlayerPrefs.SetInt("shipIndex", shipIndex);
+           
+            
         }
-       
+        PlayerPrefs.SetInt("shipIndex", shipIndex);
     }
     public void selectShipTwo()
     {
@@ -66,9 +67,9 @@ public class ShipSelect : MonoBehaviour {
         if (shipIndex < 0)
         {
             shipIndex = ships.Length -1;
-            PlayerPrefs.SetInt("shipIndex", shipIndex);
+           
         }
-       
+        PlayerPrefs.SetInt("shipIndex", shipIndex);
     }
 
 
