@@ -25,12 +25,12 @@ public class PlayerMove : MonoBehaviour
 
 
 
-    public int maxSpeed = 70;
-    public int minSpeed = 10;
-    public float rotationSpeed = 150;
+    public float maxSpeed = 70f;
+    public float minSpeed = 10f;
+    public float rotationSpeed = 0.05f;
     public bool status = false;
 
-    public int currrentSpeed = 30;
+    public float currrentSpeed = 30f;
     private GameObject[] turbines;
 
     void Start()
@@ -87,7 +87,7 @@ public class PlayerMove : MonoBehaviour
              //   MaxTurbines(0.55f);
             }
 
-            Vector3 mouseMovement = (Input.mousePosition - (new Vector3(Screen.width, Screen.height, 0) / 2.0f)) * 1;
+            Vector3 mouseMovement = (Input.mousePosition - (new Vector3(Screen.width, Screen.height, 0) / 2.0f)) * 0.25f;
             transform.Rotate(new Vector3(-mouseMovement.y, mouseMovement.x, -mouseMovement.x) * 0.025f);
             transform.Translate(Vector3.forward * Time.deltaTime * currrentSpeed);
             DecreaseFuel();
