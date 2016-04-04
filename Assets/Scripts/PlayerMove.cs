@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
-    
+
     public float fuel = 1024f;
     public float shipHealth = 100f;
     public float shipShield = 100f;
@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour
     public Slider armorShield;
     public bool nearPlanet = false;
     public string nearPlanetName;
-
+    private Text[] canvasTexts;
 
 
     public float maxSpeed = 70f;
@@ -45,15 +45,23 @@ public class PlayerMove : MonoBehaviour
         fuelSlider.value = fuel;
         healthSlider.value = shipHealth;
         armorShield.value = shipShield;
+
+        canvasTexts = canvas.GetComponentsInChildren<Text>();
     }
 
     void Update()
-    {           
+    {
 
         if (nearPlanet)
         {
-            Debug.Log("You are near planet " + nearPlanetName + ": Press E key to land.");
+            canvasTexts[2].enabled = true;
+            //Debug.Log("You are near planet " + nearPlanetName + ": Press E key to land.");
+            canvasTexts[2].text = string.Format("You are near planet {0}. Press E key to land.", nearPlanetName);
             LandOnPlanet();
+        }
+        else
+        {
+            canvasTexts[2].enabled = false;
         }
     }
 
@@ -75,16 +83,17 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 currrentSpeed = maxSpeed;
-             //   MaxTurbines(0.65f);
+                //   MaxTurbines(0.65f);
             }//Min speed
             else if (Input.GetKey(KeyCode.S))
             {
                 currrentSpeed = minSpeed;
-              //  MaxTurbines(0.3f);
+                //  MaxTurbines(0.3f);
             }//Cruise speed
-            else {
+            else
+            {
                 currrentSpeed = 30;
-             //   MaxTurbines(0.55f);
+                //   MaxTurbines(0.55f);
             }
 
             Vector3 mouseMovement = (Input.mousePosition - (new Vector3(Screen.width, Screen.height, 0) / 2.0f)) * 0.25f;
@@ -98,7 +107,7 @@ public class PlayerMove : MonoBehaviour
     {
         foreach (GameObject turbine in turbines)
         {
-          //  turbine.GetComponent<LensFlare>().brightness = intensity;
+            //  turbine.GetComponent<LensFlare>().brightness = intensity;
         }
     }
     private void DecreaseFuel()
@@ -120,6 +129,7 @@ public class PlayerMove : MonoBehaviour
         if (target.gameObject.tag == "planet")
         {
             nearPlanetName = target.gameObject.name;
+            //canvasTexts[2].enabled = true;
         }
     }
 
@@ -128,6 +138,7 @@ public class PlayerMove : MonoBehaviour
         if (target.gameObject.tag == "planet")
         {
             nearPlanetName = "";
+            //canvasTexts[2].enabled = false;
         }
     }
 
