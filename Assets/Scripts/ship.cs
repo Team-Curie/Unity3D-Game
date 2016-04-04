@@ -5,10 +5,11 @@ public class ship : MonoBehaviour {
 
     public bool nearShip = false;
     public string nearPlanetName;
+    private PlayerMovement2 player;
 
     // Use this for initialization
     void Start() {
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement2>();
     }
 
     // Update is called once per frame
@@ -21,6 +22,8 @@ public class ship : MonoBehaviour {
 
     void landPlanet() {
         if (nearShip == true && Input.GetKeyDown("e")) {
+            PlayerPrefs.SetInt("Money", player.currency);
+            Debug.Log(PlayerPrefs.GetInt("Money"));
             Application.LoadLevel (nearPlanetName);
         }
     }

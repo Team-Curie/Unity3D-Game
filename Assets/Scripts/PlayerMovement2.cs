@@ -13,6 +13,7 @@ public class PlayerMovement2 : MonoBehaviour
     public float jumpForce = 1000f;
     public float rotationZ = 0.0f;
     public Slider healthSlider;
+    public Text moneyText;
     public Image damageImage;
     public float flashSpeed = 1f;
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
@@ -24,11 +25,13 @@ public class PlayerMovement2 : MonoBehaviour
     private GameObject gun;
     private Animation reloadAnimation;
     private float hitTimeout = 3f;
+    public int currency;
 
     void Awake()
     {
         gun = GameObject.FindGameObjectWithTag("gun");
         reloadAnimation = gun.GetComponent<Animation>();
+        currency = PlayerPrefs.GetInt("Money");
     }
 
     // Use this for initialization
@@ -39,6 +42,7 @@ public class PlayerMovement2 : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         healthSlider.value = playerHealth;
         clip = GetComponent<PlayerShooting>();
+        
     }
 
     void FixedUpdate()
@@ -55,6 +59,7 @@ public class PlayerMovement2 : MonoBehaviour
     {
         playerMove();
         playerRotate();
+        moneyText.text = currency.ToString();
 
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
@@ -161,6 +166,10 @@ public class PlayerMovement2 : MonoBehaviour
             SetGravity(walkGravity);
         }
         Debug.Log("Gravity on the ground is " + Physics.gravity);
+
+       
+
+
     }
 
     private void OnTriggerExit(Collider collider)
@@ -172,4 +181,13 @@ public class PlayerMovement2 : MonoBehaviour
         }
         Debug.Log("Gravity in air is " + Physics.gravity);
     }
+    private void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "darkCrystal")
+        {
+            currency += 20;
+            Destroy(col.gameObject);
+        }
+    }
+
 }
