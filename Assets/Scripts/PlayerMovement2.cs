@@ -26,12 +26,13 @@ public class PlayerMovement2 : MonoBehaviour
     private Animation reloadAnimation;
     private float hitTimeout = 3f;
     public int currency;
-
+    
     void Awake()
     {
         gun = GameObject.FindGameObjectWithTag("gun");
         reloadAnimation = gun.GetComponent<Animation>();
         currency = PlayerPrefs.GetInt("Money");
+        clip.clipAmmount = PlayerPrefs.GetInt("clips");
     }
 
     // Use this for initialization

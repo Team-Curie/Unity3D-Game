@@ -23,6 +23,7 @@ public class ship : MonoBehaviour {
     void landPlanet() {
         if (nearShip == true && Input.GetKeyDown("e")) {
             PlayerPrefs.SetInt("Money", player.currency);
+            PlayerPrefs.SetInt("clips", player.clip.clipAmmount);
             Debug.Log(PlayerPrefs.GetInt("Money"));
             Application.LoadLevel (nearPlanetName);
         }

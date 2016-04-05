@@ -23,6 +23,7 @@ public class PlayerMove : MonoBehaviour
     public bool nearPlanet = false;
     public string nearPlanetName;
     private Text[] canvasTexts;
+    public PlayerShooting clips;
 
 
     public float maxSpeed = 70f;
@@ -35,6 +36,8 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
+        clips = GetComponent<PlayerShooting>();
+        clips.clipAmmount = PlayerPrefs.GetInt("clips");
         fuel = PlayerPrefs.GetFloat("shipFuel");
         shipHealth = PlayerPrefs.GetFloat("shipHealth");
         shipShield = PlayerPrefs.GetFloat("shipShield");
@@ -146,6 +149,7 @@ public class PlayerMove : MonoBehaviour
             PlayerPrefs.SetFloat("shipFuel", fuel);
             PlayerPrefs.SetFloat("shipShield", shipShield);
             PlayerPrefs.SetFloat("shipHealth", shipHealth);
+            PlayerPrefs.SetInt("clips", clips.clipAmmount);
             nearPlanet = false;
             SceneManager.LoadScene(nearPlanetName);
         }
