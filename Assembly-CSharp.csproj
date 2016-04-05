@@ -56,10 +56,12 @@
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement2.cs" />
      <Compile Include="Assets\Scripts\PlayerShooting.cs" />
+     <Compile Include="Assets\Scripts\ShopItemSelect.cs" />
      <Compile Include="Assets\Scripts\currencyScript.cs" />
      <Compile Include="Assets\Scripts\planet.cs" />
      <Compile Include="Assets\Scripts\ship.cs" />
      <Compile Include="Assets\ShipSelect.cs" />
+     <Compile Include="Assets\darkCrystalScript.cs" />
      <Compile Include="Assets\shipRotate.cs" />
      <Compile Include="Assets\shipSpawnScript.cs" />
      <None Include="Assets\Earthborn Troll\Shader\Alpha_Texture.shader" />

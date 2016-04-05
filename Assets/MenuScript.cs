@@ -2,13 +2,13 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class MenuScript : MonoBehaviour {
+public class MenuScript : MonoBehaviour
+{
 
     public GameObject creditsScreen;
-    
-	public void loadMainScene()
+
+    public void loadMainScene()
     {
-        
         Application.LoadLevel("Hangar");
     }
 

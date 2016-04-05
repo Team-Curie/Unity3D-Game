@@ -33,6 +33,26 @@ public class PlayerMove : MonoBehaviour
     public float currrentSpeed = 30f;
     private GameObject[] turbines;
 
+    void Awake()
+    {
+        fuel = PlayerPrefs.GetFloat("shipFuel");
+        shipHealth = PlayerPrefs.GetFloat("shipHealth");
+        shipShield = PlayerPrefs.GetFloat("shipShield");
+
+        if (fuel == 0)
+        {
+            fuel = 1024f;
+        }
+        if (shipHealth == 0)
+        {
+            shipHealth = 100f;
+        }
+        if (shipShield == 0)
+        {
+            shipShield = 100f;
+        }
+    }
+
     void Start()
     {
         canvas = FindObjectOfType<Canvas>();
@@ -55,13 +75,15 @@ public class PlayerMove : MonoBehaviour
         if (nearPlanet)
         {
             canvasTexts[2].enabled = true;
-            //Debug.Log("You are near planet " + nearPlanetName + ": Press E key to land.");
+            Debug.Log("You are near planet " + nearPlanetName + ": Press E key to land.");
             canvasTexts[2].text = string.Format("You are near planet {0}. Press E key to land.", nearPlanetName);
             LandOnPlanet();
         }
-        else
+
+        if (nearPlanetName == "")
         {
             canvasTexts[2].enabled = false;
+            nearPlanet = false;
         }
     }
 
@@ -112,14 +134,19 @@ public class PlayerMove : MonoBehaviour
     }
     private void DecreaseFuel()
     {
-        fuel -= (currrentSpeed / 10);
+        fuel -= (currrentSpeed / 1000);
         fuelSlider.value = fuel;
         //Debug.Log(fuel);
     }
+
     private void LandOnPlanet()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            PlayerPrefs.SetFloat("shipFuel", fuel);
+            PlayerPrefs.SetFloat("shipShield", shipShield);
+            PlayerPrefs.SetFloat("shipHealth", shipHealth);
+            nearPlanet = false;
             SceneManager.LoadScene(nearPlanetName);
         }
     }
@@ -129,7 +156,6 @@ public class PlayerMove : MonoBehaviour
         if (target.gameObject.tag == "planet")
         {
             nearPlanetName = target.gameObject.name;
-            //canvasTexts[2].enabled = true;
         }
     }
 
@@ -138,7 +164,6 @@ public class PlayerMove : MonoBehaviour
         if (target.gameObject.tag == "planet")
         {
             nearPlanetName = "";
-            //canvasTexts[2].enabled = false;
         }
     }
 
