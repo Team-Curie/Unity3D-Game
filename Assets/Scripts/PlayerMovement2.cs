@@ -37,12 +37,14 @@ public class PlayerMovement2 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //playerCamera = Camera.main;
         SetGravity(walkGravity);
         playerRigidbody = GetComponent<Rigidbody>();
         healthSlider.value = playerHealth;
         clip = GetComponent<PlayerShooting>();
-        
+
+        //Debug.Log(PlayerPrefs.GetFloat("shipFuel"));
+        //Debug.Log(PlayerPrefs.GetFloat("shipShield"));
+        //Debug.Log(PlayerPrefs.GetFloat("shipHealth"));
     }
 
     void FixedUpdate()
@@ -50,7 +52,6 @@ public class PlayerMovement2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
-            //Debug.Log(healthSlider.value);
         }
     }
 
@@ -166,10 +167,6 @@ public class PlayerMovement2 : MonoBehaviour
             SetGravity(walkGravity);
         }
         Debug.Log("Gravity on the ground is " + Physics.gravity);
-
-       
-
-
     }
 
     private void OnTriggerExit(Collider collider)
@@ -181,6 +178,7 @@ public class PlayerMovement2 : MonoBehaviour
         }
         Debug.Log("Gravity in air is " + Physics.gravity);
     }
+
     private void OnCollisionExit(Collision col)
     {
         if (col.gameObject.tag == "darkCrystal")

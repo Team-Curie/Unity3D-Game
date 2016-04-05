@@ -101,6 +101,7 @@ public class EnemyShipAI : MonoBehaviour {
                         else if(playerShip.shipShield <= 0)
                         {
                             playerShip.shipHealth -= enemyShipDamage;
+                            playerShip.shipShield = 0;
                         }
                     }
 
