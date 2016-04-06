@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyShipAI : MonoBehaviour {
+public class EnemyShipAI : MonoBehaviour
+{
     public float enemyHealth;
     public Transform[] wayPoints;
     public Transform targetPosition;
@@ -96,12 +97,17 @@ public class EnemyShipAI : MonoBehaviour {
                         if (playerShip.shipShield > 0)
                         {
                             playerShip.shipShield -= enemyShipDamage;
-                           
+
                         }
-                        else if(playerShip.shipShield <= 0)
+                        else if (playerShip.shipShield <= 0)
                         {
                             playerShip.shipHealth -= enemyShipDamage;
                             playerShip.shipShield = 0;
+
+                            if (playerShip.shipHealth <= 0)
+                            {
+                                playerShip.isDestroyed = true;
+                            }
                         }
                     }
 
@@ -122,7 +128,7 @@ public class EnemyShipAI : MonoBehaviour {
 
 
         }
-        if(enemyHealth <= 0)
+        if (enemyHealth <= 0)
         {
             enemyHealth = 0;
 

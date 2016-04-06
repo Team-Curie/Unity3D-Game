@@ -14,7 +14,6 @@ public class PlayerMove : MonoBehaviour
     public float fuel = 1024f;
     public float shipHealth = 100f;
     public float shipShield = 100f;
-    public float mouseSensitivity = 100f;
     public Canvas canvas;
     private Slider[] canvasSliders;
     public Slider fuelSlider;
@@ -25,14 +24,15 @@ public class PlayerMove : MonoBehaviour
     private Text[] canvasTexts;
     public PlayerShooting clips;
 
-
     public float maxSpeed = 70f;
     public float minSpeed = 10f;
     public float rotationSpeed = 150f;
     public bool status = false;
+    public bool isDestroyed = false;
 
     public float currrentSpeed = 30f;
     private GameObject[] turbines;
+    private int currentMoney;
 
     void Awake()
     {
@@ -41,6 +41,7 @@ public class PlayerMove : MonoBehaviour
         fuel = PlayerPrefs.GetFloat("shipFuel");
         shipHealth = PlayerPrefs.GetFloat("shipHealth");
         shipShield = PlayerPrefs.GetFloat("shipShield");
+        currentMoney = PlayerPrefs.GetInt("Money");
 
         if (fuel == 0)
         {
@@ -61,25 +62,42 @@ public class PlayerMove : MonoBehaviour
         canvas = FindObjectOfType<Canvas>();
         canvasSliders = canvas.GetComponentsInChildren<Slider>();
 
-        healthSlider = canvasSliders[0];
-        fuelSlider = canvasSliders[1];
-        armorShield = canvasSliders[2];
+        // in the Main scene
+        // canvasSliders[0] => the FuelSlider in ShipCanvas -> ShipUI -> FuelHolder
+        // canvasSliders[1] => the ArmorSlider in ShipCanvas -> ShipUI -> ArmorHolder
+        // canvasSliders[2] => the HealthSlider in ShipCanvas -> ShipUI -> HealthHolder
+        fuelSlider = canvasSliders[0];
+        armorShield = canvasSliders[1];
+        healthSlider = canvasSliders[2];
 
         fuelSlider.value = fuel;
         healthSlider.value = shipHealth;
         armorShield.value = shipShield;
 
         canvasTexts = canvas.GetComponentsInChildren<Text>();
+
+        // in the Main scene
+        // canvasTexts[0] => the RocketCounter from ShipCanvas -> ShipUI -> Ammo
+        // canvasTexts[1] => the MoneyCounter from ShipCanvas -> ShipUI -> Currency
+        // canvasTexts[2] => the LandingMessage from ShipCanvas
+        canvasTexts[1].text = currentMoney.ToString();
+    }
+
+    void FixedUpdate()
+    {
+        if (isDestroyed)
+        {
+            Debug.Log("YOU ARE DESTROYED. GO HOME.....");
+        }
     }
 
     void Update()
     {
-
         if (nearPlanet)
         {
             canvasTexts[2].enabled = true;
             Debug.Log("You are near planet " + nearPlanetName + ": Press E key to land.");
-            canvasTexts[2].text = string.Format("You are near planet {0}. Press E key to land.", nearPlanetName);
+            canvasTexts[2].text = string.Format("You are near {0}. Press E key to land.", nearPlanetName);
             LandOnPlanet();
         }
 

@@ -83,6 +83,11 @@ public class EnemyScriptGround : MonoBehaviour
         player.playerHealth -= trollDamage;
         player.healthSlider.value = player.playerHealth;
         Debug.Log("hit");
+
+        if (player.playerHealth <= 0)
+        {
+            player.isDead = true;
+        }
     }
 
     void GotoNextPoint()

@@ -26,7 +26,9 @@ public class PlayerMovement2 : MonoBehaviour
     private Animation reloadAnimation;
     private float hitTimeout = 3f;
     public int currency;
-    
+    public bool isDead = false;
+    public Text escapeMessage;
+
     void Awake()
     {
         gun = GameObject.FindGameObjectWithTag("gun");
@@ -53,6 +55,11 @@ public class PlayerMovement2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
+        }
+
+        if (isDead)
+        {
+            Debug.Log("YOU ARE DEAD. GAME OVER.");
         }
     }
 
@@ -157,7 +164,7 @@ public class PlayerMovement2 : MonoBehaviour
                 SetGravity(walkGravity);
             }
         }
-        Debug.Log("Gravity on the ground is " + Physics.gravity);
+        //Debug.Log("Gravity on the ground is " + Physics.gravity);
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -167,7 +174,7 @@ public class PlayerMovement2 : MonoBehaviour
             isOnTheGround = true;
             SetGravity(walkGravity);
         }
-        Debug.Log("Gravity on the ground is " + Physics.gravity);
+        //Debug.Log("Gravity on the ground is " + Physics.gravity);
     }
 
     private void OnTriggerExit(Collider collider)
@@ -177,7 +184,7 @@ public class PlayerMovement2 : MonoBehaviour
             isOnTheGround = false;
             SetGravity(jumpGravity);
         }
-        Debug.Log("Gravity in air is " + Physics.gravity);
+        //Debug.Log("Gravity in air is " + Physics.gravity);
     }
 
     private void OnCollisionExit(Collision col)
@@ -188,5 +195,4 @@ public class PlayerMovement2 : MonoBehaviour
             Destroy(col.gameObject);
         }
     }
-
 }
