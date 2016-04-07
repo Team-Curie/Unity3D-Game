@@ -11,8 +11,8 @@ public class PauseControllerScript : MonoBehaviour
 
     void Start()
     {
-        playerHealthCheck = PlayerPrefs.GetFloat("playerHealth");
-        shipHealthCheck = PlayerPrefs.GetFloat("shipHealth");
+        //playerHealthCheck = PlayerPrefs.GetFloat("playerHealth");
+        //shipHealthCheck = PlayerPrefs.GetFloat("shipHealth");
         isPaused = false;
     }
 
@@ -66,5 +66,13 @@ public class PauseControllerScript : MonoBehaviour
         //Cursor.visible = true;
         menu.SetActive(false);
         SceneManager.LoadScene("StartScene");
+    }
+
+    public void Quit(GameObject menu)
+    {
+        isPaused = !isPaused;
+        Time.timeScale = 1;
+        menu.SetActive(false);
+        Application.Quit();
     }
 }

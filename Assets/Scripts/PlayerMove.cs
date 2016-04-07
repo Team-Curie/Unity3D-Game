@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
+using System.IO;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -38,9 +40,6 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
-        pauseMenu = GameObject.FindObjectOfType<PauseControllerScript>();
-        //Debug.Log(GameObject.Find("PauseMenuCanvas").GetComponentInChildren<GameObject>());
-
         clips = GetComponent<PlayerShooting>();
 
         fuel = PlayerPrefs.GetFloat("shipFuel");
@@ -53,6 +52,7 @@ public class PlayerMove : MonoBehaviour
         {
             shipHealth = 100f;
             PlayerPrefs.SetFloat("shipHealth", shipHealth);
+            PlayerPrefs.SetFloat("playerHealth", 100f);
         }
     }
 
@@ -87,7 +87,10 @@ public class PlayerMove : MonoBehaviour
         canvasTexts[1].text = currentMoney.ToString();
 
         // get the pause panel, so we can later enable and disable it.
-        pausePanel = GameObject.FindGameObjectWithTag("PausePanel");
+        pauseMenu = GameObject.FindObjectOfType<PauseControllerScript>();
+
+        pausePanel = GameObject.Find("PauseMenuCanvas/PausePanel");
+        pausePanel.SetActive(false);
     }
 
     void FixedUpdate()
