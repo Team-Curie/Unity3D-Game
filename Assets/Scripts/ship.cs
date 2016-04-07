@@ -23,8 +23,8 @@ public class ship : MonoBehaviour
     {
         if (nearShip == true && Input.GetKeyDown("e"))
         {
-            PlayerPrefs.SetInt("Money", player.currency);
-            PlayerPrefs.SetInt("clips", player.clip.clipAmmount);
+            // saving stats from planet
+            player.SavePlayerData(player.playerHealth, player.currency, player.clip.clipAmmount);
             //Debug.Log(PlayerPrefs.GetInt("Money"));
             Application.LoadLevel(nearPlanetName);
         }

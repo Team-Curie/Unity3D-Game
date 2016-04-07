@@ -17,15 +17,15 @@ public class ShopItemSelect : MonoBehaviour
     public float shipFuel;
     public int clips;
 
-  
+
     [SerializeField]
     private int shieldValue;
     [SerializeField]
     private int fuelValue;
     [SerializeField]
     private int money;
-   
-    
+
+
     void Awake()
     {
         shipShield = PlayerPrefs.GetFloat("shipShield");
@@ -39,7 +39,7 @@ public class ShopItemSelect : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
+
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class ShopItemSelect : MonoBehaviour
         shieldText.text = "Ship Armor: " + shipShield.ToString();
         fuelText.text = "Ship Fuel: " + shipFuel.ToString();
         ammunitionText.text = "Ammunition: " + clips.ToString();
-        
+
 
 
     }
@@ -123,17 +123,17 @@ public class ShopItemSelect : MonoBehaviour
 
     public void buyItem()
     {
-        if(itemIndex == 0 && money >= 20 )
+        if (itemIndex == 0 && money >= 20)
         {
             money -= 20;
             upgradeShield(20);
         }
-       else  if (itemIndex == 1 && money >= 10)
+        else if (itemIndex == 1 && money >= 10)
         {
             money -= 10;
             upgradeFuel(100);
         }
-      else   if (itemIndex == 2 && money >= 30)
+        else if (itemIndex == 2 && money >= 30)
         {
             money -= 30;
             upgradeBullets(1);
@@ -142,26 +142,14 @@ public class ShopItemSelect : MonoBehaviour
         {
             Debug.Log("Not Enough Crystals");
         }
-
-
-
-
     }
 
     public void exitScene()
     {
-
         PlayerPrefs.SetFloat("shipShield", shipShield);
         PlayerPrefs.SetFloat("shipFuel", shipFuel);
         PlayerPrefs.SetInt("clips", clips);
         PlayerPrefs.SetInt("Money", money);
-        SceneManager.UnloadScene("Shop");
         SceneManager.LoadScene("main");
-
-
     }
-
-
-
-
 }

@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     public float fuel = 1024f;
     public float shipHealth = 100f;
     public float shipShield = 100f;
-    public Canvas canvas;
+    public Canvas[] canvases;
     private Slider[] canvasSliders;
     public Slider fuelSlider;
     public Slider healthSlider;
@@ -33,36 +33,39 @@ public class PlayerMove : MonoBehaviour
     public float currrentSpeed = 30f;
     private GameObject[] turbines;
     private int currentMoney;
+    public GameObject pausePanel;
+    public PauseControllerScript pauseMenu;
 
     void Awake()
     {
+        pauseMenu = GameObject.FindObjectOfType<PauseControllerScript>();
+        //Debug.Log(GameObject.Find("PauseMenuCanvas").GetComponentInChildren<GameObject>());
+
         clips = GetComponent<PlayerShooting>();
-        clips.clipAmmount = PlayerPrefs.GetInt("clips");
+
         fuel = PlayerPrefs.GetFloat("shipFuel");
-        shipHealth = PlayerPrefs.GetFloat("shipHealth");
         shipShield = PlayerPrefs.GetFloat("shipShield");
+        shipHealth = PlayerPrefs.GetFloat("shipHealth");
+        clips.clipAmmount = PlayerPrefs.GetInt("clips");
         currentMoney = PlayerPrefs.GetInt("Money");
 
-        if (fuel == 0)
-        {
-            fuel = 1024f;
-        }
-        if (shipHealth == 0)
+        if (shipHealth <= 0)
         {
             shipHealth = 100f;
-        }
-        if (shipShield == 0)
-        {
-            shipShield = 100f;
+            PlayerPrefs.SetFloat("shipHealth", shipHealth);
         }
     }
 
     void Start()
     {
-        canvas = FindObjectOfType<Canvas>();
-        canvasSliders = canvas.GetComponentsInChildren<Slider>();
+        // get all canvases in the current scene
+        // canvases[0] => Pause Menu Canvas
+        // canvases[1] => Ship Canvas
+        canvases = FindObjectsOfType<Canvas>();
 
-        // in the Main scene
+        // get all canvas sliders in the Main scene
+        canvasSliders = canvases[1].GetComponentsInChildren<Slider>();
+
         // canvasSliders[0] => the FuelSlider in ShipCanvas -> ShipUI -> FuelHolder
         // canvasSliders[1] => the ArmorSlider in ShipCanvas -> ShipUI -> ArmorHolder
         // canvasSliders[2] => the HealthSlider in ShipCanvas -> ShipUI -> HealthHolder
@@ -74,13 +77,17 @@ public class PlayerMove : MonoBehaviour
         healthSlider.value = shipHealth;
         armorShield.value = shipShield;
 
-        canvasTexts = canvas.GetComponentsInChildren<Text>();
+        // get the texts from Ship Canvas
+        canvasTexts = canvases[1].GetComponentsInChildren<Text>();
 
         // in the Main scene
         // canvasTexts[0] => the RocketCounter from ShipCanvas -> ShipUI -> Ammo
         // canvasTexts[1] => the MoneyCounter from ShipCanvas -> ShipUI -> Currency
         // canvasTexts[2] => the LandingMessage from ShipCanvas
         canvasTexts[1].text = currentMoney.ToString();
+
+        // get the pause panel, so we can later enable and disable it.
+        pausePanel = GameObject.FindGameObjectWithTag("PausePanel");
     }
 
     void FixedUpdate()
@@ -88,6 +95,11 @@ public class PlayerMove : MonoBehaviour
         if (isDestroyed)
         {
             Debug.Log("YOU ARE DESTROYED. GO HOME.....");
+            // If palyer is dead, Saving default values for the next game
+            // Fuel = 1024, Ship Shield = 100, Ship Health = 0, Bullet Clips = 3, Money = 0
+            SavePlayerData(1024f, 100f, 0f, 3, 0);
+            PlayerPrefs.SetFloat("playerHealth", 0f);
+            pauseMenu.PauseGame(pausePanel);
         }
     }
 
@@ -164,10 +176,9 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            PlayerPrefs.SetFloat("shipFuel", fuel);
-            PlayerPrefs.SetFloat("shipShield", shipShield);
-            PlayerPrefs.SetFloat("shipHealth", shipHealth);
-            PlayerPrefs.SetInt("clips", clips.clipAmmount);
+            // Saving current stats, before ladning on planet
+            // Fuel = 1024, Ship Shield = 100, Ship Health = 100, Bullet Clips = 3
+            SavePlayerData(fuel, shipShield, shipHealth, clips.clipAmmount, currentMoney);
             nearPlanet = false;
             SceneManager.LoadScene(nearPlanetName);
         }
@@ -189,4 +200,12 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public void SavePlayerData(float shFuel, float shShield, float shHealth, int bullets, int money)
+    {
+        PlayerPrefs.SetFloat("shipFuel", shFuel);
+        PlayerPrefs.SetFloat("shipShield", shShield);
+        PlayerPrefs.SetFloat("shipHealth", shHealth);
+        PlayerPrefs.SetInt("clips", bullets);
+        PlayerPrefs.SetInt("Money", money);
+    }
 }

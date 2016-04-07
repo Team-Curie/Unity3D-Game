@@ -28,13 +28,25 @@ public class PlayerMovement2 : MonoBehaviour
     public int currency;
     public bool isDead = false;
     public Text escapeMessage;
+    public GameObject pausePanel;
+    public PauseControllerScript pauseMenu;
 
     void Awake()
     {
         gun = GameObject.FindGameObjectWithTag("gun");
         reloadAnimation = gun.GetComponent<Animation>();
+        playerHealth = PlayerPrefs.GetFloat("playerHealth");
         currency = PlayerPrefs.GetInt("Money");
         clip.clipAmmount = PlayerPrefs.GetInt("clips");
+
+        if (playerHealth <= 0)
+        {
+            playerHealth = 100f;
+            PlayerPrefs.SetFloat("playerHealth", playerHealth);
+        }
+
+        //pausePanel = GameObject.FindGameObjectWithTag("PausePanel");
+        pauseMenu = GameObject.FindObjectOfType<PauseControllerScript>();
     }
 
     // Use this for initialization
@@ -59,7 +71,13 @@ public class PlayerMovement2 : MonoBehaviour
 
         if (isDead)
         {
-            Debug.Log("YOU ARE DEAD. GAME OVER.");
+            // If palyer is dead, Saving dead default values for the next game
+            // Player Health = 0, Money = 0, Bullet Clips = 3
+            SavePlayerData(0f, 0, 3);
+            PlayerPrefs.SetFloat("shipFuel", 1024f);
+            PlayerPrefs.SetFloat("shipShield", 100f);
+            PlayerPrefs.SetFloat("shipHealth", 0f);
+            pauseMenu.PauseGame(pausePanel);
         }
     }
 
@@ -194,5 +212,12 @@ public class PlayerMovement2 : MonoBehaviour
             currency += 20;
             Destroy(col.gameObject);
         }
+    }
+
+    public void SavePlayerData(float health, int money, int bullets)
+    {
+        PlayerPrefs.SetFloat("playerHealth", health);
+        PlayerPrefs.SetInt("Money", money);
+        PlayerPrefs.SetInt("clips", bullets);
     }
 }

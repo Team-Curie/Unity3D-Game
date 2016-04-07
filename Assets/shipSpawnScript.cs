@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class shipSpawnScript : MonoBehaviour {
-
+public class shipSpawnScript : MonoBehaviour
+{
     public GameObject[] shipPrefabs;
     public ShipSelect ship;
-	// Use this for initialization
-	void Awake () {
+
+    // Use this for initialization
+    void Awake()
+    {
         ship = FindObjectOfType<ShipSelect>();
         if (PlayerPrefs.GetInt("shipIndex") != null)
         {
             ship.shipIndex = PlayerPrefs.GetInt("shipIndex");
         }
-       
-   
+
 
         if (ship.shipIndex == 0)
         {
@@ -25,11 +26,6 @@ public class shipSpawnScript : MonoBehaviour {
         {
             Instantiate(shipPrefabs[1], this.transform.position, Quaternion.identity);
             Debug.Log("VIPER");
-
         }
-
-
     }
-	
-	
 }

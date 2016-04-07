@@ -82,6 +82,7 @@ public class EnemyScriptGround : MonoBehaviour
         player.shouldFlashDamage = true;
         player.playerHealth -= trollDamage;
         player.healthSlider.value = player.playerHealth;
+        PlayerPrefs.SetFloat("playerHealth", player.playerHealth);
         Debug.Log("hit");
 
         if (player.playerHealth <= 0)

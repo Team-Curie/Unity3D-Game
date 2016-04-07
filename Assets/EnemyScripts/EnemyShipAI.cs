@@ -103,6 +103,7 @@ public class EnemyShipAI : MonoBehaviour
                         {
                             playerShip.shipHealth -= enemyShipDamage;
                             playerShip.shipShield = 0;
+                            PlayerPrefs.SetFloat("shipHealth", playerShip.shipHealth);
 
                             if (playerShip.shipHealth <= 0)
                             {
