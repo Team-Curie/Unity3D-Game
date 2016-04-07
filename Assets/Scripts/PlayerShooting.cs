@@ -15,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     public ParticleSystem muzzle;
     public Light light;
     public Text bulletDisplay;
+    public float playerShootRange;
     public int bulletSpeed = 100;
     public int bulletDamage = 50;
     public int currentBulletAmount;
@@ -58,7 +59,7 @@ public class PlayerShooting : MonoBehaviour
 
                     shot[0].Play();
                     currentBulletAmount -= 1;
-                    if (Physics.Raycast(ray, out hit, 500))
+                    if (Physics.Raycast(ray, out hit, playerShootRange))
                     {
                         //Debug.Log("Shooooooot");
                         //currentBulletAmount -= 1;
