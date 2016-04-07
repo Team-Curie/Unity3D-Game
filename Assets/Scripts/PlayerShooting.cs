@@ -22,10 +22,12 @@ public class PlayerShooting : MonoBehaviour
     public int clipAmmount;
     public bool reload;
     public float reloadTimer = 3f;
+    public PauseControllerScript pauseMenu;
 
 
     void Start()
     {
+        pauseMenu = GameObject.FindObjectOfType<PauseControllerScript>();
         bulletDisplay = GameObject.FindGameObjectWithTag("PlayerCanvas").GetComponentInChildren<Text>();
         reload = true;
     }
@@ -46,62 +48,55 @@ public class PlayerShooting : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
 
-
-
-        if (Input.GetMouseButtonDown(0))
+        if (!pauseMenu.isPaused)
         {
-
-            if (currentBulletAmount > 0 && reload && clipAmmount >= 0)
+            if (Input.GetMouseButtonDown(0))
             {
-                muzzle.Play();
-
-                shot[0].Play();
-                currentBulletAmount -= 1;
-                if (Physics.Raycast(ray, out hit, 500))
+                if (currentBulletAmount > 0 && reload && clipAmmount >= 0)
                 {
-                    //Debug.Log("Shooooooot");
-                    //currentBulletAmount -= 1;
-                    //if(hit.collider == null)
-                    //{
-                    //    currentBulletAmount -= 1;
-                    //}
+                    muzzle.Play();
 
-                    if (hit.collider.gameObject.tag != "Enemy" && hit.collider.gameObject.tag != "EnemyShip")
+                    shot[0].Play();
+                    currentBulletAmount -= 1;
+                    if (Physics.Raycast(ray, out hit, 500))
                     {
-                        var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
-                    }
-                    else if (hit.collider.gameObject.tag == "Enemy")
-                    {
-                        EnemyScriptGround enemy = hit.collider.GetComponent<EnemyScriptGround>();
-                        enemy.takeDamage(bulletDamage);
-                        var particleClone = Instantiate(effect[1], hit.point, Quaternion.LookRotation(hit.normal));
-                    }
-                    else if (hit.collider.gameObject.tag == "EnemyShip")
-                    {
-                        Debug.Log("DAMAGE TAKEN");
-                        EnemyShipAI enemyShip = hit.collider.GetComponent<EnemyShipAI>();
-                        enemyShip.takeDamage(bulletDamage);
-                        var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
+                        //Debug.Log("Shooooooot");
+                        //currentBulletAmount -= 1;
+                        //if(hit.collider == null)
+                        //{
+                        //    currentBulletAmount -= 1;
+                        //}
 
+                        if (hit.collider.gameObject.tag != "Enemy" && hit.collider.gameObject.tag != "EnemyShip")
+                        {
+                            var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
+                        }
+                        else if (hit.collider.gameObject.tag == "Enemy")
+                        {
+                            EnemyScriptGround enemy = hit.collider.GetComponent<EnemyScriptGround>();
+                            enemy.takeDamage(bulletDamage);
+                            var particleClone = Instantiate(effect[1], hit.point, Quaternion.LookRotation(hit.normal));
+                        }
+                        else if (hit.collider.gameObject.tag == "EnemyShip")
+                        {
+                            Debug.Log("DAMAGE TAKEN");
+                            EnemyShipAI enemyShip = hit.collider.GetComponent<EnemyShipAI>();
+                            enemyShip.takeDamage(bulletDamage);
+                            var particleClone = Instantiate(effect[0], hit.point, Quaternion.LookRotation(hit.normal));
+                        }
                     }
                 }
             }
-
-
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-
-
-            if ((currentBulletAmount <= 0 || currentBulletAmount != defaultBulletCount) && clipAmmount > 0)
+            if (Input.GetMouseButtonDown(1))
             {
-                shot[1].Play();
-                clipAmmount -= 1;
-                currentBulletAmount = defaultBulletCount;
-                reload = false;
-
+                if ((currentBulletAmount <= 0 || currentBulletAmount != defaultBulletCount) && clipAmmount > 0)
+                {
+                    shot[1].Play();
+                    clipAmmount -= 1;
+                    currentBulletAmount = defaultBulletCount;
+                    reload = false;
+                }
             }
-
         }
 
     }
