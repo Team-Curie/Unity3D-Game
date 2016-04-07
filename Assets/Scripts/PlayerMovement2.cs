@@ -94,11 +94,14 @@ public class PlayerMovement2 : MonoBehaviour
         //    //Debug.Log(healthSlider.value);
         //}
 
-        if (Input.GetMouseButtonDown(1))
+        if (!pauseMenu.isPaused)
         {
-            if (clip.clipAmmount >= 0 && clip.currentBulletAmount == 30)
+            if (Input.GetMouseButtonDown(1))
             {
-                reloadAnimation.Play();
+                if (clip.clipAmmount >= 0 && clip.currentBulletAmount == 30)
+                {
+                    reloadAnimation.Play();
+                }
             }
         }
     }

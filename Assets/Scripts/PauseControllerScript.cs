@@ -40,6 +40,8 @@ public class PauseControllerScript : MonoBehaviour
         playerHealthCheck = PlayerPrefs.GetFloat("playerHealth");
         shipHealthCheck = PlayerPrefs.GetFloat("shipHealth");
 
+        isPaused = true;
+
         Time.timeScale = 0;
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
@@ -50,7 +52,7 @@ public class PauseControllerScript : MonoBehaviour
     {
         if (playerHealthCheck != 0 && shipHealthCheck != 0)
         {
-            isPaused = !isPaused;
+            isPaused = false;
             Time.timeScale = 1;
             //Cursor.lockState = CursorLockMode.Confined;
             //Cursor.visible = true;
@@ -60,7 +62,7 @@ public class PauseControllerScript : MonoBehaviour
 
     public void StartNewGame(GameObject menu)
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = 1;
         //Cursor.lockState = CursorLockMode.None;
         //Cursor.visible = true;
@@ -70,7 +72,7 @@ public class PauseControllerScript : MonoBehaviour
 
     public void Quit(GameObject menu)
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = 1;
         menu.SetActive(false);
         Application.Quit();

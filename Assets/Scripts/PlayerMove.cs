@@ -154,9 +154,12 @@ public class PlayerMove : MonoBehaviour
                 //   MaxTurbines(0.55f);
             }
 
-            Vector3 mouseMovement = (Input.mousePosition - (new Vector3(Screen.width, Screen.height, 0) / 2.0f)) * 0.25f;
-            transform.Rotate(new Vector3(-mouseMovement.y, mouseMovement.x, -mouseMovement.x) * 0.025f);
-            transform.Translate(Vector3.forward * Time.deltaTime * currrentSpeed);
+            if (!pauseMenu.isPaused)
+            {
+                Vector3 mouseMovement = (Input.mousePosition - (new Vector3(Screen.width, Screen.height, 0) / 2.0f)) * 0.25f;
+                transform.Rotate(new Vector3(-mouseMovement.y, mouseMovement.x, -mouseMovement.x) * 0.025f);
+                transform.Translate(Vector3.forward * Time.deltaTime * currrentSpeed);
+            }
             DecreaseFuel();
         }
     }
